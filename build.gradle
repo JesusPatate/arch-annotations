@@ -3,8 +3,8 @@ plugins {
     id 'maven'
 }
 
-group 'fr.ggautier'
-version '1.0-SNAPSHOT'
+group 'fr.ggautier.arch'
+version '1.0.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
@@ -14,4 +14,19 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task packageJavadoc(type: Jar, dependsOn: 'javadoc') {
+    from javadoc.destinationDir
+    classifier = 'javadoc'
+}
+
+task packageSources(type: Jar, dependsOn: 'classes') {
+    from sourceSets.main.allSource
+    classifier = 'sources'
+}
+
+artifacts {
+    archives packageJavadoc
+    archives packageSources
 }
